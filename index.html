@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한국 상급종합병원 안내</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            position: relative; /* CTA 절대배치용 */
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* 공통 CTA 버튼 */
+        .cta-btn {
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: .92rem;
+            color: #fff;
+            text-decoration: none;
+            white-space: nowrap;
+            box-shadow: 0 10px 20px rgba(0,0,0,.18);
+            transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.22); }
+        .cta-btn:focus { outline: 3px solid rgba(99,102,241,.5); outline-offset: 2px; }
+
+        .cta-right { right: 24px; bottom: 24px; background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%); }
+        .cta-left  { left: 24px;  bottom: 24px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+
+        .filters {
+            padding: 30px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: white;
+            color: #475569;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); }
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; transform: translateY(-2px);
+        }
+
+        .search-box { max-width: 400px; margin: 0 auto; position: relative; }
+        .search-input {
+            width: 100%; padding: 15px 50px 15px 20px; border: 2px solid #e2e8f0;
+            border-radius: 25px; font-size: 1rem; outline: none; transition: border-color 0.3s ease;
+        }
+        .search-input:focus { border-color: #667eea; }
+        .search-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+
+        .hospitals-grid {
+            padding: 30px; display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px;
+        }
+
+        .hospital-card {
+            background: white; border-radius: 15px; padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease; border-left: 4px solid #667eea;
+            position: relative; overflow: hidden;
+        }
+
+        .hospital-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(102,126,234,.05) 0%, rgba(118,75,162,.05) 100%);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .hospital-card:hover::before { opacity: 1; }
+        .hospital-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); }
+
+        .hospital-name { font-size: 1.4rem; font-weight: 700; color: #1e293b; margin-bottom: 15px; position: relative; z-index: 1; }
+        .hospital-info { margin-bottom: 15px; position: relative; z-index: 1; }
+        .info-item { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 0.95rem; }
+        .info-icon { width: 20px; margin-right: 10px; color: #667eea; margin-top: 2px; flex-shrink: 0; }
+        .info-text { color: #475569; line-height: 1.5; }
+
+        .hospital-actions {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 20px; position: relative; z-index: 1;
+        }
+
+        .action-btn {
+            padding: 10px 12px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; text-decoration: none; text-align: center; font-size: 0.8rem;
+            display: flex; align-items: center; justify-content: center; gap: 6px; color: white;
+        }
+        .call-btn { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .call-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(16,185,129,.3); }
+        .website-btn { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .website-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(59,130,246,.3); }
+        .map-btn { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .map-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,158,11,.3); }
+
+        .region-badge {
+            position: absolute; top: 15px; right: 15px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white; padding: 6px 12px; border-radius: 15px;
+            font-size: 0.8rem; font-weight: 600; z-index: 2;
+        }
+
+        .no-results {
+            text-align: center; padding: 60px 20px; color: #64748b; font-size: 1.1rem;
+        }
+
+        /* 반응형: 모바일에선 CTA 버튼들이 제목 아래 중앙에 표시 */
+        @media (max-width: 768px) {
+            .hospitals-grid { grid-template-columns: 1fr; padding: 20px; }
+            .filter-buttons { justify-content: center; }
+            .filter-btn { font-size: 0.8rem; padding: 10px 20px; }
+            .header h1 { font-size: 2rem; }
+            .hospital-actions { grid-template-columns: 1fr; gap: 10px; }
+            .action-btn { font-size: 0.9rem; padding: 12px 18px; }
+
+            .cta-btn {
+                position: static;
+                margin: 12px 6px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 상급종합병원 안내</h1>
+            <p>전국 47개 상급종합병원 정보를 한눈에 확인하세요</p>
+
+            <!-- 왼쪽 하단: 전국종합병원 안내 -->
+            <a
+              class="cta-btn cta-left"
+              href="./전국종합병원ty라이프창업스쿨링크.html"
+              target="_blank"
+              rel="noopener"
+              aria-label="전국종합병원 안내 (상급종합 제외) 페이지로 이동"
+            >전국종합병원 안내</a>
+
+            <!-- 오른쪽 하단: TY라이프창업스쿨 -->
+            <a
+              class="cta-btn cta-right"
+              href="https://cafe.naver.com/flslwlxrrntjqj/1327"
+              target="_blank"
+              rel="noopener"
+              aria-label="헬스케어로 부수입만드는방법! TY라이프창업스쿨 바로가기"
+            >헬스케어로 부수입만드는방법! TY라이프창업스쿨</a>
+        </div>
+
+        <div class="filters">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-region="all">🇰🇷 전체</button>
+                <button class="filter-btn" data-region="서울">🏙️ 서울</button>
+                <button class="filter-btn" data-region="경기">🏢 경기</button>
+                <button class="filter-btn" data-region="인천">✈️ 인천</button>
+                <button class="filter-btn" data-region="부산">🌊 부산</button>
+                <button class="filter-btn" data-region="대구">🌸 대구</button>
+                <button class="filter-btn" data-region="대전">🚄 대전</button>
+                <button class="filter-btn" data-region="광주">🍃 광주</button>
+                <button class="filter-btn" data-region="울산">⚙️ 울산</button>
+                <button class="filter-btn" data-region="강원">⛰️ 강원</button>
+                <button class="filter-btn" data-region="충북">🏞️ 충북</button>
+                <button class="filter-btn" data-region="충남">🌾 충남</button>
+                <button class="filter-btn" data-region="전북">🌿 전북</button>
+                <button class="filter-btn" data-region="전남">🌊 전남</button>
+                <button class="filter-btn" data-region="경북">🍁 경북</button>
+                <button class="filter-btn" data-region="경남">🏔️ 경남</button>
+                <button class="filter-btn" data-region="제주">🏝️ 제주</button>
+            </div>
+
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="병원명으로 검색하세요..." id="searchInput">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+
+        <div class="hospitals-grid" id="hospitalsGrid"></div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>검색 결과가 없습니다</h3>
+            <p>다른 검색어나 지역을 선택해보세요.</p>
+        </div>
+    </div>
+
+    <script>
+        // 간단한 예시 데이터 (필요 시 교체)
+        const hospitals = [
+            { name: "서울대학교병원", region: "서울", address: "서울 종로구 대학로 101", phone: "02-2072-2114", website: "https://www.snuh.org" },
+            { name: "서울아산병원", region: "서울", address: "서울 송파구 올림픽로43길 88", phone: "02-3010-3114", website: "https://www.amc.seoul.kr" },
+            { name: "삼성서울병원", region: "서울", address: "서울 강남구 일원로 81", phone: "02-3410-2114", website: "https://www.samsunghospital.com" }
+        ];
+
+        function renderHospitals(list) {
+            const grid = document.getElementById('hospitalsGrid');
+            const noResults = document.getElementById('noResults');
+            if (!list || list.length === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+            grid.style.display = 'grid';
+            noResults.style.display = 'none';
+            grid.innerHTML = list.map(h => {
+                const q = encodeURIComponent(h.name + ' ' + h.address);
+                return \`
+                <div class="hospital-card">
+                    <div class="region-badge">\${h.region}</div>
+                    <div class="hospital-name">\${h.name}</div>
+                    <div class="hospital-info">
+                        <div class="info-item"><span class="info-icon">📍</span><span class="info-text">\${h.address}</span></div>
+                        <div class="info-item"><span class="info-icon">📞</span><span class="info-text">\${h.phone}</span></div>
+                    </div>
+                    <div class="hospital-actions">
+                        <a href="tel:\${h.phone.replace(/[^0-9]/g,'')}" class="action-btn call-btn">📞 전화</a>
+                        <a href="\${h.website}" target="_blank" rel="noopener" class="action-btn website-btn">🌐 홈페이지</a>
+                        <a href="https://map.naver.com/v5/search/\${q}" target="_blank" rel="noopener" class="action-btn map-btn">🗺️ 지도</a>
+                    </div>
+                </div>\`
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => renderHospitals(hospitals));
+    </script>
+</body>
+</html>
