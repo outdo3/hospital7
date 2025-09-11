@@ -25,7 +25,7 @@
         }
 
         .header {
-            position: relative; /* CTA 절대배치용 */
+            position: relative; /* ⬅ CTA 절대배치용 */
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             padding: 40px;
             text-align: center;
@@ -44,7 +44,7 @@
             opacity: 0.9;
         }
 
-        /* 공통 CTA 버튼 */
+        /* ✅ 공통 CTA 버튼 */
         .cta-btn {
             position: absolute;
             display: inline-flex;
@@ -63,6 +63,7 @@
         .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(0,0,0,.22); }
         .cta-btn:focus { outline: 3px solid rgba(99,102,241,.5); outline-offset: 2px; }
 
+        /* 위치 */
         .cta-right { right: 24px; bottom: 24px; background: linear-gradient(135deg, #a78bfa 0%, #6366f1 100%); }
         .cta-left  { left: 24px;  bottom: 24px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
 
@@ -99,7 +100,10 @@
             color: white; transform: translateY(-2px);
         }
 
-        .search-box { max-width: 400px; margin: 0 auto; position: relative; }
+        .search-box {
+            max-width: 400px; margin: 0 auto; position: relative;
+        }
+
         .search-input {
             width: 100%; padding: 15px 50px 15px 20px; border: 2px solid #e2e8f0;
             border-radius: 25px; font-size: 1rem; outline: none; transition: border-color 0.3s ease;
@@ -159,7 +163,7 @@
             text-align: center; padding: 60px 20px; color: #64748b; font-size: 1.1rem;
         }
 
-        /* 반응형: 모바일에선 CTA 버튼들이 제목 아래 중앙에 표시 */
+        /* 📱 반응형: 모바일에선 CTA 버튼들이 제목 아래 중앙에 표시 */
         @media (max-width: 768px) {
             .hospitals-grid { grid-template-columns: 1fr; padding: 20px; }
             .filter-buttons { justify-content: center; }
@@ -181,7 +185,8 @@
             <h1>🏥 상급종합병원 안내</h1>
             <p>전국 47개 상급종합병원 정보를 한눈에 확인하세요</p>
 
-            <!-- 왼쪽 하단: 전국종합병원 안내 -->
+            <!-- ✅ 왼쪽 하단: 전국종합병원 안내 (상급종합 제외 페이지로 이동) -->
+            <!-- ⚠️ href를 실제 파일 경로로 바꿔주세요 -->
             <a
               class="cta-btn cta-left"
               href="./전국종합병원ty라이프창업스쿨링크.html"
@@ -190,7 +195,7 @@
               aria-label="전국종합병원 안내 (상급종합 제외) 페이지로 이동"
             >전국종합병원 안내</a>
 
-            <!-- 오른쪽 하단: TY라이프창업스쿨 -->
+            <!-- ✅ 오른쪽 하단: TY라이프창업스쿨 -->
             <a
               class="cta-btn cta-right"
               href="https://cafe.naver.com/flslwlxrrntjqj/1327"
@@ -236,43 +241,173 @@
     </div>
 
     <script>
-        // 간단한 예시 데이터 (필요 시 교체)
+        // 상급종합병원 데이터 (2024-2026 제5기 기준)
         const hospitals = [
-            { name: "서울대학교병원", region: "서울", address: "서울 종로구 대학로 101", phone: "02-2072-2114", website: "https://www.snuh.org" },
-            { name: "서울아산병원", region: "서울", address: "서울 송파구 올림픽로43길 88", phone: "02-3010-3114", website: "https://www.amc.seoul.kr" },
-            { name: "삼성서울병원", region: "서울", address: "서울 강남구 일원로 81", phone: "02-3410-2114", website: "https://www.samsunghospital.com" }
+            // 서울
+            { name: "서울대학교병원", region: "서울", address: "서울특별시 종로구 대학로 101", phone: "02-2072-2114", website: "https://www.snuh.org" },
+            { name: "서울아산병원", region: "서울", address: "서울특별시 송파구 올림픽로43길 88", phone: "02-3010-3114", website: "https://www.amc.seoul.kr" },
+            { name: "삼성서울병원", region: "서울", address: "서울특별시 강남구 일원로 81", phone: "02-3410-2114", website: "https://www.samsunghospital.com" },
+            { name: "세브란스병원", region: "서울", address: "서울특별시 서대문구 연세로 50-1", phone: "02-2228-5800", website: "https://www.severance.healthcare" },
+            { name: "강남세브란스병원", region: "서울", address: "서울특별시 강남구 언주로 211", phone: "02-2019-3114", website: "https://www.gangnam.severance.healthcare" },
+            { name: "서울성모병원", region: "서울", address: "서울특별시 서초구 반포대로 222", phone: "02-2258-5114", website: "https://www.cmcseoul.or.kr" },
+            { name: "여의도성모병원", region: "서울", address: "서울특별시 영등포구 63로 10", phone: "02-3779-1114", website: "https://www.cmcyeouido.or.kr" },
+            { name: "고려대학교안암병원", region: "서울", address: "서울특별시 성북구 고려대로 73", phone: "02-920-5114", website: "https://www.kumc.or.kr" },
+            { name: "중앙대학교병원", region: "서울", address: "서울특별시 동작구 흑석로 102", phone: "02-6299-1114", website: "https://www.caumc.or.kr" },
+            { name: "경희의료원", region: "서울", address: "서울특별시 동대문구 경희대로 23", phone: "02-958-8114", website: "https://www.khmc.or.kr" },
+            { name: "한양대학교병원", region: "서울", address: "서울특별시 성동구 왕십리로 222-1", phone: "02-2290-8114", website: "https://www.hyumc.com" },
+            { name: "건국대학교병원", region: "서울", address: "서울특별시 광진구 능동로 120-1", phone: "02-2030-7114", website: "https://www.kuh.ac.kr" },
+            { name: "이화여자대학교의료원", region: "서울", address: "서울특별시 양천구 안양천로 1071", phone: "02-2650-5114", website: "https://www.eumc.ac.kr" },
+            { name: "강북삼성병원", region: "서울", address: "서울특별시 종로구 새문안로 29", phone: "02-2001-2001", website: "https://www.kbsmc.co.kr" },
+            { name: "서울특별시보라매병원", region: "서울", address: "서울특별시 동작구 보라매로5길 20", phone: "02-870-2114", website: "https://www.boramae.seoul.kr" },
+
+            // 경기
+            { name: "분당서울대학교병원", region: "경기", address: "경기도 성남시 분당구 구미로 173번길 82", phone: "031-787-7114", website: "https://www.snubh.org" },
+            { name: "아주대학교병원", region: "경기", address: "경기도 수원시 영통구 월드컵로 164", phone: "031-219-5114", website: "https://www.ajoumc.or.kr" },
+            { name: "차의과학대학교 분당차병원", region: "경기", address: "경기도 성남시 분당구 야탑로 59", phone: "031-780-5000", website: "https://www.chamc.co.kr" },
+            { name: "가톨릭대학교 성빈센트병원", region: "경기", address: "경기도 수원시 팔달구 중부대로 93", phone: "031-249-7114", website: "https://www.stvincent.or.kr" },
+            { name: "명지병원", region: "경기", address: "경기도 고양시 덕양구 화수로 14번길 55", phone: "031-810-5114", website: "https://www.myongji.or.kr" },
+            { name: "국립암센터", region: "경기", address: "경기도 고양시 일산동구 일산로 323", phone: "031-920-1114", website: "https://www.ncc.re.kr" },
+
+            // 인천
+            { name: "인하대학교병원", region: "인천", address: "인천광역시 중구 인항로 27", phone: "032-890-2114", website: "https://www.inha.com" },
+            { name: "가톨릭대학교 인천성모병원", region: "인천", address: "인천광역시 부평구 동수로 56", phone: "032-510-5114", website: "https://www.cmcis.or.kr" },
+
+            // 부산
+            { name: "부산대학교병원", region: "부산", address: "부산광역시 서구 구덕로 179", phone: "051-240-7114", website: "https://www.pnuh.co.kr" },
+            { name: "동아대학교병원", region: "부산", address: "부산광역시 서구 대신공원로 26", phone: "051-240-2114", website: "https://www.daemc.or.kr" },
+            { name: "인제대학교 부산백병원", region: "부산", address: "부산광역시 부산진구 복지로 75", phone: "051-890-6114", website: "https://www.paik.ac.kr" },
+            { name: "고신대학교복음병원", region: "부산", address: "부산광역시 서구 감천로 262", phone: "051-990-6114", website: "https://www.gospelhospital.com" },
+
+            // 대구
+            { name: "경북대학교병원", region: "대구", address: "대구광역시 중구 동덕로 130", phone: "053-420-5114", website: "https://www.knuh.or.kr" },
+            { name: "대구가톨릭대학교병원", region: "대구", address: "대구광역시 남구 두류공원로 17길 33", phone: "053-650-4114", website: "https://www.dcmc.co.kr" },
+            { name: "계명대학교 동산병원", region: "대구", address: "대구광역시 중구 달성로 56", phone: "053-250-7114", website: "https://www.dsmc.or.kr" },
+
+            // 대전
+            { name: "충남대학교병원", region: "대전", address: "대전광역시 중구 문화로 282", phone: "042-280-7114", website: "https://www.cnuh.co.kr" },
+            { name: "건양대학교병원", region: "대전", address: "대전광역시 서구 관저동로 158", phone: "042-600-9114", website: "https://www.kyuh.ac.kr" },
+
+            // 광주
+            { name: "전남대학교병원", region: "광주", address: "광주광역시 동구 백서로 42", phone: "062-220-6114", website: "https://www.cnuh.com" },
+            { name: "조선대학교병원", region: "광주", address: "광주광역시 동구 필문대로 365", phone: "062-220-3114", website: "https://www.chosunuh.co.kr" },
+
+            // 울산
+            { name: "울산대학교병원", region: "울산", address: "울산광역시 동구 방어진순환도로 877", phone: "052-250-7000", website: "https://www.uuh.ulsan.kr" },
+
+            // 강원
+            { name: "강원대학교병원", region: "강원", address: "강원특별자치도 춘천시 백령로 156", phone: "033-258-2114", website: "https://www.knuh.or.kr" },
+            { name: "한림대학교춘천성심병원", region: "강원", address: "강원특별자치도 춘천시 삭주로 77", phone: "033-240-5114", website: "https://www.csh.co.kr" },
+
+            // 충북
+            { name: "충북대학교병원", region: "충북", address: "충청북도 청주시 서원구 1순환로 776", phone: "043-269-6114", website: "https://www.chungbuk.ac.kr" },
+
+            // 충남
+            { name: "순천향대학교천안병원", region: "충남", address: "충청남도 천안시 동남구 순천향6길 31", phone: "041-570-2114", website: "https://www.schmc.ac.kr" },
+            { name: "단국대학교병원", region: "충남", address: "충청남도 천안시 동남구 단대로 201", phone: "041-550-3114", website: "https://www.dkuh.co.kr" },
+
+            // 전북
+            { name: "전북대학교병원", region: "전북", address: "전북특별자치도 전주시 덕진구 건지로 20", phone: "063-250-1114", website: "https://www.jbuh.co.kr" },
+            { name: "원광대학교병원", region: "전북", address: "전북특별자치도 익산시 무왕로 895", phone: "063-859-1114", website: "https://www.wkuh.org" },
+
+            // 전남
+            { name: "화순전남대학교병원", region: "전남", address: "전라남도 화순군 화순읍 서양로 322", phone: "061-379-7114", website: "https://www.cnuhh.com" },
+
+            // 경북
+            { name: "포항세명기독병원", region: "경북", address: "경상북도 포항시 남구 새천년대로 351", phone: "054-289-1000", website: "https://www.semyeong.co.kr" },
+            { name: "안동병원", region: "경북", address: "경상북도 안동시 동문로 87", phone: "054-840-1000", website: "https://www.andong.ac.kr" },
+
+            // 경남
+            { name: "부산대학교 양산병원", region: "경남", address: "경상남도 양산시 물금읍 금오로 20", phone: "055-360-2114", website: "https://www.pnuyh.co.kr" },
+            { name: "경상국립대학교병원", region: "경남", address: "경상남도 진주시 강남로 79", phone: "055-750-8114", website: "https://www.gnuh.co.kr" },
+            { name: "인제대학교 부산백병원", region: "경남", address: "경상남도 김해시 인제로 75", phone: "055-320-8114", website: "https://www.paik.ac.kr" },
+
+            // 제주
+            { name: "제주대학교병원", region: "제주", address: "제주특별자치도 제주시 아란13길 15", phone: "064-717-1114", website: "https://www.jejunuh.co.kr" }
         ];
 
-        function renderHospitals(list) {
+        let filteredHospitals = [...hospitals];
+
+        function renderHospitals(hospitalsToRender) {
             const grid = document.getElementById('hospitalsGrid');
             const noResults = document.getElementById('noResults');
-            if (!list || list.length === 0) {
+
+            if (hospitalsToRender.length === 0) {
                 grid.style.display = 'none';
                 noResults.style.display = 'block';
                 return;
             }
+
             grid.style.display = 'grid';
             noResults.style.display = 'none';
-            grid.innerHTML = list.map(h => {
-                const q = encodeURIComponent(h.name + ' ' + h.address);
-                return \`
+
+            grid.innerHTML = hospitalsToRender.map(hospital => {
+                const mapQuery = encodeURIComponent(hospital.name + ' ' + hospital.address);
+                return `
                 <div class="hospital-card">
-                    <div class="region-badge">\${h.region}</div>
-                    <div class="hospital-name">\${h.name}</div>
+                    <div class="region-badge">${hospital.region}</div>
+                    <div class="hospital-name">${hospital.name}</div>
                     <div class="hospital-info">
-                        <div class="info-item"><span class="info-icon">📍</span><span class="info-text">\${h.address}</span></div>
-                        <div class="info-item"><span class="info-icon">📞</span><span class="info-text">\${h.phone}</span></div>
+                        <div class="info-item">
+                            <span class="info-icon">📍</span>
+                            <span class="info-text">${hospital.address}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon">📞</span>
+                            <span class="info-text">${hospital.phone}</span>
+                        </div>
                     </div>
                     <div class="hospital-actions">
-                        <a href="tel:\${h.phone.replace(/[^0-9]/g,'')}" class="action-btn call-btn">📞 전화</a>
-                        <a href="\${h.website}" target="_blank" rel="noopener" class="action-btn website-btn">🌐 홈페이지</a>
-                        <a href="https://map.naver.com/v5/search/\${q}" target="_blank" rel="noopener" class="action-btn map-btn">🗺️ 지도</a>
+                        <a href="tel:${hospital.phone.replace(/[^0-9]/g, '')}" class="action-btn call-btn">📞 전화</a>
+                        <a href="${hospital.website}" target="_blank" rel="noopener noreferrer" class="action-btn website-btn">🌐 홈페이지</a>
+                        <a href="https://map.naver.com/v5/search/${mapQuery}" target="_blank" rel="noopener noreferrer" class="action-btn map-btn">🗺️ 지도</a>
                     </div>
-                </div>\`
-            }).join('');
+                </div>
+            `;}).join('');
         }
 
-        document.addEventListener('DOMContentLoaded', () => renderHospitals(hospitals));
+        function filterHospitals() {
+            const activeRegion = document.querySelector('.filter-btn.active').dataset.region;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            filteredHospitals = hospitals.filter(hospital => {
+                const matchesRegion = activeRegion === 'all' || hospital.region === activeRegion;
+                const matchesSearch = searchTerm === '' ||
+                    hospital.name.toLowerCase().includes(searchTerm) ||
+                    hospital.address.toLowerCase().includes(searchTerm);
+
+                return matchesRegion && matchesSearch;
+            });
+
+            renderHospitals(filteredHospitals);
+        }
+
+        function initializeEventListeners() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    filterHospitals();
+                });
+            });
+
+            document.getElementById('searchInput').addEventListener('input', filterHospitals);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+            renderHospitals(hospitals);
+        });
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                initializeEventListeners();
+                renderHospitals(hospitals);
+            });
+        } else {
+            initializeEventListeners();
+            renderHospitals(hospitals);
+        }
     </script>
 </body>
 </html>
+
